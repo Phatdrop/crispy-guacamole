@@ -10,8 +10,19 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  test:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      working-directory: ./PrimeService.Tests>
+      run: dotnet test
+
   build:
     runs-on: windows-latest
+    needs: test
     permissions:
       contents: read #This is required for actions/checkout
 
@@ -62,4 +73,5 @@ jobs:
           app-name: 'Crispy-Guacemole'
           slot-name: 'Production'
           package: .
+
           
